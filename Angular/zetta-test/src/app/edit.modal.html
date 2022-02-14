@@ -1,0 +1,79 @@
+<div fxLayout="column" fxLayoutGap="8px" [formGroup]="dataForm" >
+  <div style="border-bottom:2px solid white;top: 0;position: sticky;z-index: 2;" fxLayout="row">
+    <div fxFlex="70%" fxLayout="row" fxLayoutGap="8px">
+      <mat-icon style="align-self: center;">group_add</mat-icon>
+      <h3 class="title2" *ngIf="data['editMode']">
+        Edit Company Staff For MCDONALD 
+      </h3>
+      <h3 class="title2"  *ngIf="!(data['editMode'])">
+        Add Company Staff For MCDONALD 
+      </h3>
+    </div>
+    <div fxFlex="30" fxLayoutAlign="end">
+      <button class="close" mat-icon-button color="warn" (click)="closeDialog();">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="8px">
+
+      <mat-form-field >
+        <mat-label>Mail</mat-label>
+        <input type="email" placeholder="Mail" aria-label="Number" matInput formControlName="email" [email]="true"/>
+      </mat-form-field>
+      <button mat-raised-button color="accent" [disabled]="checkEmailAvaibility()"style="height: 100%;align-items: center;" (click)="isEmailExist()">	<mat-icon>done</mat-icon> Check Email Avaibility</button>
+      <ng-container *ngIf="checkEmail === 1" >
+        <mat-icon color="warn">done_all</mat-icon>
+        Email is Available
+      </ng-container>   
+  </div>
+  <div fxLayout="row" fxLayoutGap="8px">
+    <mat-radio-group matInput aria-label="Select an option" formControlName="civility" fxLayoutGap="8px" style="align-self: center;"> 
+      <mat-label>Civility</mat-label>
+      <ng-container *ngFor="let data of dataCivility">
+        <mat-radio-button [value]="data['value']">{{data['name']}}</mat-radio-button>
+      </ng-container>
+    </mat-radio-group>
+
+    <mat-form-field >
+      <mat-label>First Name</mat-label>
+      <input type="text" placeholder="First Name" aria-label="Number" matInput formControlName="first_name" />
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-label>Last Name</mat-label>
+      <input type="text" placeholder="Last Name" aria-label="Number" matInput formControlName="last_name" />
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="8px">
+    <mat-form-field >
+      <input type="text" placeholder="Select Entity" aria-label="Number" matInput formControlName="entity" />
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-label>Select Company</mat-label>
+      <input type="text" placeholder="Select Company" aria-label="Number" matInput formControlName="company" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Select User Type</mat-label>
+      <mat-select matInput formControlName="user_type">
+        <mat-option *ngFor="let eachUser of dataMentor" [value]="eachUser['name']">
+          {{eachUser['name']}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div fxLayoutAlign="center" fxLayoutGap="8px">
+    <button  class="prieds-btn-primary" color="warn" mat-raised-button (click)="closeDialog()">
+      Close
+    </button>
+    <button  class="prieds-btn-primary" color="primary" *ngIf="!(data['editMode'])" mat-raised-button [disabled]="disabledSubmit()" (click)="createUser()">
+      Submit
+    </button>
+  </div>
+
+</div>
